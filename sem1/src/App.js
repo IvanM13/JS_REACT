@@ -5,6 +5,7 @@ import Hello from './components/Hello';
 import Greating from './components/Greating';
 import CurrentTime from './components/CurrentTime';
 import EventCard from './components/EventCard';
+import ButtonUsage from './components/mat';
 
 class App extends Component {
   render() {
@@ -20,6 +21,7 @@ class App extends Component {
         <EventCard name="Blog" number="2" />
         <EventCard name="Blog" number="3" />
         <EventCard name="Blog" number="4" />
+        <ButtonUsage />
 
       </div>
     );
