@@ -14,6 +14,7 @@ const ArticleDetail = ({ articles }) => {
         <div>
             <h2>{article.title}</h2>
             <p>{article.content}</p>
+            <p>Page</p>
         </div>
      );
 }
