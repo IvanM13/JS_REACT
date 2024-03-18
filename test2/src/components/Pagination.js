@@ -6,7 +6,7 @@ const Pagination = ({ totalProducts, ProductsPerPage, currentPage }) => {
 
     return (
         <div>
-            {Array.from({ length: totalPages }, (id, index) =>(
+            {Array.from({ length: totalPages }, (_, index) =>(
                 <Link key={index} to={`/page/${index + 1}`}>
                     {index + 1}
                 </Link>
