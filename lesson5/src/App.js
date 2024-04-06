@@ -1,44 +1,71 @@
 import React, { createContext, useContext, useState } from "react";
-import './App.css';
-import ThemedButton from "./components/ThemedButton";
-const MessageContext = createContext();
+import CanvasComponent from "./components/CanvasComponent";
+// import './App.css';
+// const MessageContext = createContext();
 
-function GrandGrandChild() {
+// function GrandGrandChild() {
   
-  const message = useContext(MessageContext);
+//   const message = useContext(MessageContext);
 
-  return <span>{message}</span>;
-}
+//   return <span>{message}</span>;
+// }
 
-function GrandParent() {
+// function GrandParent() {
+//   return (
+//     <MessageContext.Provider value="Hello from the top Context!">
+//       <Parent />
+//     </MessageContext.Provider>
+//   )
+// }
+
+// function Parent() {
+//   return <Child />;
+// }
+
+// function Child() {
+//   return <GrandChild />;  
+// }
+
+// function GrandChild() {
+//   return <GrandGrandChild />
+// }
+const ThemeContext = createContext();
+
+
+const ThemedButton = () => {
+
+  const theme = useContext(ThemeContext);
+
   return (
-    <MessageContext.Provider value="Hello from the top Context!">
-      <Parent />
-    </MessageContext.Provider>
-  )
-}
+      <button style={{ background: theme.background, color: theme.foreground }}>
+          Themed Button
+      </button>
+  );
+};
 
-function Parent() {
-  return <Child />;
-}
+const App = () => {
 
-function Child() {
-  return <GrandChild />;  
-}
+  const [theme, setTheme] = useState({
+    background: 'ligthgray',
+    foreground: 'black',
+  });
 
-function GrandChild() {
-  return <GrandGrandChild />
-}
-
-function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Пример использования React.Context</h1>
-        <GrandParent />
+    <ThemeContext.Provider value={theme}>
+      <div>
+        <h1>Использование React.Context</h1>
         <ThemedButton />
-      </header>
-    </div>    
+          <button onClick={()=>
+            setTheme({
+              background: 'black',
+              foreground: "white",
+            })
+          }
+          >
+            Сменить тему
+          </button>
+      </div>
+    </ThemeContext.Provider>
   );
 }  
 
