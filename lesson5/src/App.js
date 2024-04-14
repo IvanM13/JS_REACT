@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from "react";
-import CanvasComponent from "./components/CanvasComponent";
 // import './App.css';
 // const MessageContext = createContext();
 
@@ -30,44 +29,113 @@ import CanvasComponent from "./components/CanvasComponent";
 //   return <GrandGrandChild />
 // }
 const ThemeContext = createContext();
+const NotesContext = createContext();
 
+const useTheme = () => useContext(ThemeContext);
+const useNotes = () => useContext(NotesContext);
 
-const ThemedButton = () => {
-
-  const theme = useContext(ThemeContext);
-
+const NotesList = () =>{
+  const { notes } = useNotes();
   return (
-      <button style={{ background: theme.background, color: theme.foreground }}>
-          Themed Button
-      </button>
+    <ul>
+      {notes.map((note, index) => (
+        <li key={index}>{note}</li>
+      ))}
+    </ul>
   );
 };
 
-const App = () => {
+const NoteInput = () =>{
+    const [inputValue, setInputValue] = useState('');
+    const { addNote } = useNotes();
+    
+    const handleInputChange = (event) =>{
+      setInputValue(event.target.value);
+    };
 
-  const [theme, setTheme] = useState({
-    background: 'ligthgray',
-    foreground: 'black',
-  });
+    const handleAddNote = () => {
+      addNote(inputValue);
+      setInputValue('');
+    };
 
-  return (
-    <ThemeContext.Provider value={theme}>
+    return(
       <div>
-        <h1>Использование React.Context</h1>
-        <ThemedButton />
-          <button onClick={()=>
-            setTheme({
-              background: 'black',
-              foreground: "white",
-            })
-          }
-          >
-            Сменить тему
-          </button>
+        <input value={inputValue} onChange={handleInputChange}/>
+        <button onClick={handleAddNote}>Добавить</button>
       </div>
-    </ThemeContext.Provider>
+    );
+};
+
+const ThemeToggle = () =>{
+  const { theme, toggleTheme } = useTheme();
+  return (
+    <button onClick={toggleTheme}>Нажми чтобы переключить на {theme === 'light' ? 'темную' : 
+    'светлую'} тему</button>
   );
-}  
+};
+
+// const ThemedButton = () => {
+
+//   const theme = useContext(ThemeContext);
+
+//   return (
+//       <button style={{ background: theme.background, color: theme.foreground }}>
+//           Themed Button
+//       </button>
+//   );
+// };
+
+const withStyles = (WrappedComponent, styles) => {
+  return (props) => {
+    const newProps = {...props, styles };
+    return <WrappedComponent {...newProps} />;
+  };
+};
+
+const Button = ({ styles }) => {
+  return (
+    <button style={styles}>
+      Click me
+    </button>
+  );
+};
+
+const StyledButton = withStyles(Button, { background: 'blue', color: 'white'});
+const StyledButton2 = withStyles(Button, { background: 'green', color: 'white'});
+
+const App = () => {
+  // const [theme, setTheme] = useState('light');
+  // const [notes, setNotes] = useState(['Элемент списка 1', 'Элемент списка 2']);
+
+  // const toggleTheme = () => {
+  //   setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'));
+  // };
+
+  // const addNote = (note) =>{
+  //   setNotes((prevNotes) => [...prevNotes, note]);
+  // };
+
+  // return (
+  //   <ThemeContext.Provider value={{theme, toggleTheme }}>
+  //     <NotesContext.Provider value={{ notes, addNote }}>
+  //       <div className="content" style={{ color: theme === 'light' ? 'black' : 'white',
+  //       background: theme === 'light' ? 'white' : 'black' }}>
+  //         <h1>Список</h1>
+  //         <ThemeToggle />
+  //         <NotesList />
+  //         <NoteInput />
+  //       </div>
+  //     </NotesContext.Provider>
+  //   </ThemeContext.Provider>
+  // );
+  return (
+    <div>
+      <h1>Пример Компоненты высшего порядка (НОС) с функциональным компнентами</h1>
+      <StyledButton />
+      <StyledButton2 />
+    </div>
+  )
+};
 
 
 

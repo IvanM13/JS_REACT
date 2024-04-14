@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useState} from "react";
+import React, { createContext, useContext} from "react";
 
 const ThemeContext = createContext();
+
 
 const ThemedButton = () => {
 
@@ -8,7 +9,7 @@ const ThemedButton = () => {
 
     return (
         <button style={{ background: theme.background, color: theme.foreground }}>
-            Theme Button
+            Themed Button
         </button>
     );
 };
