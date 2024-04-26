@@ -8,28 +8,31 @@ function Comments() {
         "Это третий комментарий"
     ]);
 
-    const clickHandler = () => {
+    function clickHandler(){
         if (!inputText.trim()) {
             return;
         }
-        setComments([...comments, inputText]);
+        setComments([ ...comments, inputText]);
         setInputText("");
     }
 
-    function foo() {
-        return comments.pop();
-    }
-
     return (
-        <div>
+        <>
             <label htmlFor="input">Введите коментарий: </label>
-            <input onChange={event => setInputText(event.target.value)}
+            <input 
+                onChange={(event) => setInputText(event.target.value)}
                 type="text"
                 id="input"
-                value={inputText} maxLength="10"></input>
+                value={inputText} 
+                maxLength={50}>
+            </input>
             <button onClick={clickHandler}>Click to add</button>
-
-        </div>
+            <ul>
+                {comments.map((item) => {
+                    <li key={comments.indexOf(item)}>{item}</li>
+                })}
+            </ul>
+        </>
     );
 }
 

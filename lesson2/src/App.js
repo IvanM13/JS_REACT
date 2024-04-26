@@ -6,6 +6,7 @@ import Timer from './components/timer';
 import Comments from './components/comments';
 import CommentForm from './components/commentForm';
 import CommentsList from './components/commentList';
+import TextInput from './components/TextInput';
 
 class App extends Component {
   render() {
@@ -18,7 +19,7 @@ class App extends Component {
           <Show data='text'/>
           <Show data="text from components" />
         </div>
-        <CommentsList />
+        <Comments />
       </div>
     );
   }
